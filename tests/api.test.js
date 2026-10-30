@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { obtenerJSON } from '../src/js/api/http.js';
+import { solicitarJSON } from '../src/js/api/http.js';
 import { consultarSalud, listarAlojamientos, consultarAlojamiento, listarComodidades } from '../src/js/api/publica.api.js';
 
 const originalFetch = globalThis.fetch;
@@ -24,7 +24,7 @@ test('usa las cuatro rutas reales y conserva los contratos JSON', async () => {
 
 test('preserva status y mensaje de error HTTP del backend', async () => {
   globalThis.fetch = async () => ({ ok: false, status: 404, json: async () => ({ error: { message: 'Alojamiento no encontrado.' } }) });
-  await assert.rejects(obtenerJSON('/api/v1/alojamientos/999'), (error) => error.status === 404 && error.message === 'Alojamiento no encontrado.');
+  await assert.rejects(solicitarJSON('/api/v1/alojamientos/999'), (error) => error.status === 404 && error.message === 'Alojamiento no encontrado.');
 });
 
 test('informa cuando Flask no está disponible', async () => {

@@ -1,47 +1,59 @@
-# Frontend Alojamientos — Sprint 1
+# Frontend Alojamientos — Sprint 2 (SPA Vanilla)
 
-SPA pública construida desde cero con **HTML5, CSS3, JavaScript ES Modules, Bootstrap 5 y Vite**, sin React. Consume la API Flask del proyecto `api-alojamientos` (backend final hasta su Sprint 3).
+Incremento acumulado **Sprint 1 + Sprint 2** del frontend de `api-alojamientos`. HTML5, CSS3, Bootstrap 5, JavaScript ES Modules, Vite, `fetch`, History API. Sin React, Vue ni Angular.
+
+## Requisitos
+
+- Node compatible con Vite 8 (preferiblemente 22.12 o posterior), npm y Git.
+- API Flask real operativa en `http://localhost:5000`; MySQL disponible y migración `003` aplicada.
+- En el `.env` **del backend**: `CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000`.
 
 ## Preparación
 
-1. Inicie MySQL y el backend Flask en `http://localhost:5000` y compruebe `GET /health`.
-2. Requiera Node.js compatible con Vite 8 (por ejemplo 22.12+).
-3. Instale dependencias con `npm ci` (o `npm install` si ha regenerado el lockfile).
-4. Cree `.env` a partir de `.env.example` y deje `VITE_API_URL=http://localhost:5000`.
-5. Ejecute `npm run dev` y abra `http://localhost:5173`.
+Desde este directorio:
 
 ```bash
 npm ci
+```
+
+En Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+En Linux/macOS:
+
+```bash
+cp .env.example .env
+```
+
+La única variable necesaria para Vite es `VITE_API_URL=http://localhost:5000`. No copie las claves MySQL ni `SECRET_KEY` del backend al frontend. Vite expone las variables con prefijo `VITE_` al navegador.
+
+```bash
+npm test
 npm run dev
 ```
 
-Otros comandos: `npm test` (9 tests automatizados), `npm run build` (genera `dist/`), `npm run preview` (vista previa de build).
+Abra `http://localhost:5173`, manteniendo Flask disponible en otra terminal. Para comprobar la compilación:
 
-## Contrato HTTP de este sprint
+```bash
+npm run build
+npm run preview
+```
 
-| Método | Ruta Flask | Vista |
-|---|---|---|
-| GET | `/health` | Inicio, Estado |
-| GET | `/api/v1/alojamientos` | Catálogo |
-| GET | `/api/v1/alojamientos/:id` | Detalle |
-| GET | `/api/v1/comodidades` | Comodidades |
+## Vistas
 
-El estado se obtiene de Flask: no hay datos simulados. Si MySQL no tiene alojamientos, la lista estará vacía. Para poblarla siga los pasos de Postman del tutorial. El backend permite por defecto el origen `http://localhost:5173`; no use `127.0.0.1:5173` sin configurar CORS adicionalmente.
+- Sprint 1 público: `/`, `/alojamientos`, `/alojamientos/:id`, `/comodidades`, `/estado`.
+- Sprint 2 público: `/registro`, `/login`.
+- Sprint 2 protegido: `/perfil` (JWT), `/admin/usuarios` (JWT + rol `admin`).
 
-## Alcance
+La sesión se guarda solo en `sessionStorage` y desaparece al cerrar la pestaña. No existe logout remoto ni renovación del JWT en la API real. Para obtener un admin, registre un usuario y ejecute `python -m scripts.promover_admin admin@ejemplo.com` **en la carpeta backend** con su `.venv`; cierre sesión e inicie nuevamente para refrescar el menú si cambió el rol.
 
-Incluye navegación SPA con History API, tarjetas ilustrativas CSS, filtro cliente por ciudad/título, control de errores y cancelación de solicitudes anteriores. **No incluye** autenticación, acciones de escritura, reservas ni subida de imágenes. Las funciones protegidas se incorporarán en los Sprints 2 y 3.
+## Contratos backend
 
-**Seguridad:** nunca coloque secretos en variables `VITE_*`; son públicas en el navegador. `package-lock.json` se versiona y `.env`, `node_modules/` y `dist/` se excluyen.
+`POST /api/v1/usuarios/registro` (201/400/409), `POST /api/v1/usuarios/login` (200/401), `GET /api/v1/usuarios/perfil` (200/401), `GET /api/v1/admin/usuarios` (200/401/403). No se implementa edición de perfiles ni de roles: esas rutas no existen en el backend entregado.
 
-## Estructura
+## Pruebas
 
-- `src/js/api/`: peticiones a las rutas reales de Flask.
-- `src/js/components/`: navbar, footer, tarjetas, estados.
-- `src/js/pages/`: vistas públicas.
-- `src/js/router/`: mapa URL-vista y History API.
-- `src/js/utils/`: escape HTML, moneda, resumen.
-- `src/css/main.css`: diseño responsive.
-- `tests/`: pruebas Node sin dependencias externas de testing.
-
-La ruta directa `/alojamientos/1` funciona con Vite en desarrollo. Al desplegar en otro hosting, configure reescritura de rutas SPA hacia `index.html`.
+`npm test` debe informar **23 pruebas superadas**, incluidos los 9 casos del Sprint 1. Las pruebas automatizadas simulan llamadas a `fetch` y no sustituyen el recorrido manual completo contra Flask/MySQL. Consulte `SPRINT-02.md` y `TUTORIAL-02.md` del paquete del docente.

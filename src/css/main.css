@@ -113,3 +113,20 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
   .stay-bottom .btn { width: 100%; }
   .detail-banner { height: 180px; }
 }
+
+/* Sprint 2 — Autenticación y autorización: continuidad visual de Sprint 1. */
+.auth-section { display: grid; place-items: start center; }
+.auth-card { width: min(100%, 510px); background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: clamp(1.5rem, 3vw, 2.5rem); box-shadow: 0 20px 55px #14372d14; }
+.auth-card .form-label { color: var(--pine); font-weight: 700; }
+.auth-card .form-control { border-radius: 10px; padding: .8rem .9rem; }
+.auth-card .btn { padding: .76rem; }
+.auth-card a { color: var(--forest); font-weight: 700; }
+.auth-card .alert { margin: 1rem 0; overflow-wrap: anywhere; }
+.navbar-identidad { display: inline-block; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+.account-card { max-width: 790px; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 2.3rem; display: grid; grid-template-columns: auto 1fr; gap: 1.8rem; }
+.account-avatar { font-size: 4rem; color: var(--forest); }
+.account-card dt { font-weight: 700; }
+.account-card dd { overflow-wrap: anywhere; }
+.account-table { background: #fff; padding: 1.2rem; border: 1px solid var(--line); border-radius: 18px; }
+.account-table td { overflow-wrap: anywhere; }
+@media (max-width: 767px) { .account-card { grid-template-columns: 1fr; padding: 1.4rem; } .navbar-identidad { max-width: 100%; } }
