@@ -12,9 +12,12 @@ export function pintarNavbar(rutaActual) {
   const sesion = obtenerSesion();
   const enlaces = [...enlacesPublicos];
   if (sesion) {
+    enlaces.push({ ruta: '/mis-alojamientos', nombre: 'Mis alojamientos' });
+    enlaces.push({ ruta: '/alojamientos/nuevo', nombre: 'Publicar' });
     enlaces.push({ ruta: '/perfil', nombre: 'Mi perfil' });
     if (sesion.usuario.rol === 'admin') {
-      enlaces.push({ ruta: '/admin/usuarios', nombre: 'Administración' });
+      enlaces.push({ ruta: '/admin/usuarios', nombre: 'Usuarios' });
+      enlaces.push({ ruta: '/admin/comodidades/nueva', nombre: 'Nueva comodidad' });
     }
   }
   const links = enlaces.map(({ ruta, nombre }) => {

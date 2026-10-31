@@ -1,6 +1,8 @@
 import { consultarAlojamiento } from '../api/publica.api.js';
 import { estadoCargando, estadoError } from '../components/Estados.js';
 import { escapeHtml, formatearCOP } from '../utils/formatters.js';
+import { obtenerSesion } from '../state/sesion.js';
+import { puedeModificar } from '../utils/gestion.js';
 
 export async function mostrarDetalle({ contenedor, params, signal }) {
   contenedor.innerHTML = `<section class="container section-block"><a href="/alojamientos" class="back-link" data-link><i class="bi bi-arrow-left me-2"></i>Volver al catálogo</a>
@@ -19,6 +21,7 @@ export async function mostrarDetalle({ contenedor, params, signal }) {
           <span class="eyebrow"><i class="bi bi-geo-alt me-1"></i>${escapeHtml(alojamiento.ciudad)}</span>
           <h1 class="display-6 fw-bold mt-2">${escapeHtml(alojamiento.titulo)}</h1>
           <p class="lead detail-description">${escapeHtml(alojamiento.descripcion)}</p>
+          ${puedeModificar(alojamiento, obtenerSesion()) ? `<a class="btn btn-outline-success" href="/alojamientos/${Number(alojamiento.id)}/editar" data-link>Editar alojamiento y comodidades</a>` : ''}
           <h2 class="h5 mt-5 mb-3">Comodidades del alojamiento</h2>
           <div class="d-flex flex-wrap gap-2">${comodidades.length
             ? comodidades.map((item) => `<span class="amenity-pill"><i class="bi bi-check-circle me-2"></i>${escapeHtml(item.nombre)}</span>`).join('')

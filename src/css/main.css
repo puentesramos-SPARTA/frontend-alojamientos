@@ -130,3 +130,15 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .account-table { background: #fff; padding: 1.2rem; border: 1px solid var(--line); border-radius: 18px; }
 .account-table td { overflow-wrap: anywhere; }
 @media (max-width: 767px) { .account-card { grid-template-columns: 1fr; padding: 1.4rem; } .navbar-identidad { max-width: 100%; } }
+
+/* Sprint 3 — gestión de alojamientos y comodidades. */
+.management-card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: clamp(1.3rem, 3vw, 2.2rem); box-shadow: 0 9px 32px #123c350b; max-width: 970px; }
+.management-card .form-label { color: var(--pine); font-weight: 700; }
+.management-card .form-control { border-radius: 10px; padding: .76rem .85rem; }
+.amenities-fieldset { border: 0; margin: 0; padding: 0; }
+.amenity-option { height: 100%; display: flex; align-items: center; gap: .75rem; padding: .75rem; border: 1px solid #dce9da; background: #f7fbf5; border-radius: 12px; cursor: pointer; }
+.amenity-option:has(input:checked) { background: #e7f2e6; border-color: #8cbaa0; }
+.amenity-option input { flex-shrink: 0; }
+.danger-panel { max-width: 970px; border: 1px solid #f1cbc9; border-radius: 18px; background: #fff7f5; padding: 1.8rem; }
+.danger-panel p { color: #7c5654; }
+@media (max-width: 576px) { .management-card { padding: 1.15rem; } }

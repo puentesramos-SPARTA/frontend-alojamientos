@@ -8,17 +8,25 @@ import { mostrarRegistro } from '../pages/RegistroPage.js';
 import { mostrarLogin } from '../pages/LoginPage.js';
 import { mostrarPerfil } from '../pages/PerfilPage.js';
 import { mostrarAdminUsuarios } from '../pages/AdminUsuariosPage.js';
+import { mostrarCrearAlojamiento } from '../pages/CrearAlojamientoPage.js';
+import { mostrarEditarAlojamiento } from '../pages/EditarAlojamientoPage.js';
+import { mostrarMisAlojamientos } from '../pages/MisAlojamientosPage.js';
+import { mostrarAdminCrearComodidad } from '../pages/AdminCrearComodidadPage.js';
 
 const rutas = [
   { patron: /^\/$/, vista: mostrarInicio },
   { patron: /^\/alojamientos\/$/, vista: mostrarAlojamientos },
+  { patron: /^\/alojamientos\/nuevo$/, vista: mostrarCrearAlojamiento, requiereAuth: true },
+  { patron: /^\/alojamientos\/([1-9]\d*)\/editar$/, vista: mostrarEditarAlojamiento, parametro: 'id', requiereAuth: true },
   { patron: /^\/alojamientos\/([1-9]\d*)$/, vista: mostrarDetalle, parametro: 'id' },
+  { patron: /^\/mis-alojamientos$/, vista: mostrarMisAlojamientos, requiereAuth: true },
   { patron: /^\/comodidades$/, vista: mostrarComodidades },
   { patron: /^\/estado$/, vista: mostrarEstado },
   { patron: /^\/registro$/, vista: mostrarRegistro },
   { patron: /^\/login$/, vista: mostrarLogin },
   { patron: /^\/perfil$/, vista: mostrarPerfil, requiereAuth: true },
   { patron: /^\/admin\/usuarios$/, vista: mostrarAdminUsuarios, requiereAuth: true, requiereAdmin: true },
+  { patron: /^\/admin\/comodidades\/nueva$/, vista: mostrarAdminCrearComodidad, requiereAuth: true, requiereAdmin: true },
 ];
 
 export function normalizarRuta(ruta) {

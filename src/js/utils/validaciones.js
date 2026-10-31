@@ -20,6 +20,8 @@ export function validarLogin({ correo, contrasena }) {
 /** Solo se permite redirigir a vistas privadas conocidas, nunca a otra web. */
 export function destinoTrasLogin(search, rol) {
   const destino = new URLSearchParams(search).get('next');
-  if (destino === '/admin/usuarios' && rol === 'admin') return destino;
+  if (rol === 'admin' && ['/admin/usuarios', '/admin/comodidades/nueva'].includes(destino)) return destino;
+  if (['/mis-alojamientos', '/alojamientos/nuevo'].includes(destino)) return destino;
+  if (/^\/alojamientos\/[1-9]\d*\/editar$/.test(destino || '')) return destino;
   return '/perfil';
 }
